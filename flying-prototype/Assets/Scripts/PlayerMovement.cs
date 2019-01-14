@@ -52,21 +52,25 @@ public class PlayerMovement : MonoBehaviour
 
     void BoundaryForce()
     {
-        Vector2 boundaryVector = PlayerObj.transform.position;
+        Vector2 boundaryVector = PlayerObj.transform.position * 0.8f;
 
         boundaryVector.x *= -1;
         boundaryVector.y *= -1;
-        if (PlayerObj.transform.position.x < -5f || PlayerObj.transform.position.x > 5f ||
-            PlayerObj.transform.position.y < -4.2f || PlayerObj.transform.position.y > 4.2f)
+        if (PlayerObj.transform.position.x > -4f && PlayerObj.transform.position.x < 4f)
         {
-            PlayerObj.AddForce(boundaryVector * 2);
+            boundaryVector.x = 0;
         }
-        if (PlayerObj.transform.position.x < -6f || PlayerObj.transform.position.x > 6f ||
-            PlayerObj.transform.position.y < -4.6f || PlayerObj.transform.position.y > 4.6f)
+        if (PlayerObj.transform.position.y > -4f && PlayerObj.transform.position.y < 4f)
         {
-            PlayerObj.drag = 4f;
-            PlayerObj.AddForce(boundaryVector * 6);
+            boundaryVector.y = 0;
         }
+        if (PlayerObj.transform.position.x < -4.5f || PlayerObj.transform.position.x > 4.5f ||
+            PlayerObj.transform.position.y < -4.5f || PlayerObj.transform.position.y > 4.5f)
+        {
+            PlayerObj.drag = 6f;
+            boundaryVector *= 4;
+        }
+        PlayerObj.AddForce(boundaryVector);
     }
 
     void SetDrag()
