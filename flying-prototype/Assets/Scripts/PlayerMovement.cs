@@ -16,8 +16,8 @@ public class PlayerMovement : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        AccelerationPower = 500;
-        RotationPower = 400;
+        AccelerationPower = 480;
+        RotationPower = 420;
 	}
 	
 	// Update is called once per frame
@@ -31,7 +31,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 forwardVector = Vector2FromAngle(PlayerObj.rotation);
 
-        if (accelerate && PlayerObj.velocity.magnitude < 5)
+        BoundaryForce();
+        if (accelerate)
         {
             PlayerObj.AddForce(forwardVector * AccelerationPower * Time.deltaTime, ForceMode2D.Force);
             RotationPower = 100;
@@ -39,13 +40,47 @@ public class PlayerMovement : MonoBehaviour
         if (rotateCW)
         {
             PlayerObj.rotation += RotationPower * Time.deltaTime;
-            Debug.Log(RotationPower);
+            // Debug.Log(RotationPower);
         }
         if (rotateCCW)
         {
             PlayerObj.rotation -= RotationPower * Time.deltaTime;
         }
-        RotationPower = 400;
+        SetDrag();
+        RotationPower = 420;
+    }
+
+    void BoundaryForce()
+    {
+        Vector2 boundaryVector = PlayerObj.transform.position;
+
+        boundaryVector.x *= -1;
+        boundaryVector.y *= -1;
+        if (PlayerObj.transform.position.x < -5f || PlayerObj.transform.position.x > 5f ||
+            PlayerObj.transform.position.y < -4.2f || PlayerObj.transform.position.y > 4.2f)
+        {
+            PlayerObj.AddForce(boundaryVector * 2);
+        }
+        if (PlayerObj.transform.position.x < -6f || PlayerObj.transform.position.x > 6f ||
+            PlayerObj.transform.position.y < -4.6f || PlayerObj.transform.position.y > 4.6f)
+        {
+            PlayerObj.drag = 4f;
+            PlayerObj.AddForce(boundaryVector * 6);
+        }
+    }
+
+    void SetDrag()
+    {
+        PlayerObj.drag = 0.5f;
+        if (PlayerObj.velocity.magnitude > 1f)
+        {
+            PlayerObj.drag = 0.7f;
+        }
+        if (PlayerObj.velocity.magnitude > 5f)
+        {
+            PlayerObj.drag = 2f;
+        }
+        // Debug.Log("Speed: " + PlayerObj.velocity.magnitude);
     }
 
     Vector2 Vector2FromAngle(float a)
