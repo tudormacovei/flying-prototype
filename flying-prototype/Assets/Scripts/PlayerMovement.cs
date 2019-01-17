@@ -6,18 +6,19 @@ public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D PlayerObj;
 
-    private bool rotateCW;
-    private bool rotateCCW;
-    private bool accelerate;
-
-    public int AccelerationPower { get; set; }
-    public int RotationPower { get; set; }
+    private bool _rotateCW;
+    private bool _rotateCCW;
+    private bool _accelerate;
+    private float _accelerateTime;
+    private int _accelerationPower;
+    private int _rotationPower;
 
     // Use this for initialization
     void Start ()
     {
-        AccelerationPower = 480;
-        RotationPower = 420;
+        _accelerationPower = 480;
+        _accelerateTime = 0;
+        _rotationPower = 420;
 	}
 	
 	// Update is called once per frame
@@ -29,25 +30,25 @@ public class PlayerMovement : MonoBehaviour
     // Used for physics operations
     void FixedUpdate()
     {
-        Vector2 forwardVector = Vector2FromAngle(PlayerObj.rotation);
+        Vector2 forwardVector = Vector2FromAngle(PlayerObj.rotation );
 
         BoundaryForce();
-        if (accelerate)
+        if (_accelerate && _accelerateTime > 0.2f)
         {
-            PlayerObj.AddForce(forwardVector * AccelerationPower * Time.deltaTime, ForceMode2D.Force);
-            RotationPower = 100;
+            PlayerObj.AddForce(forwardVector * _accelerationPower * Time.deltaTime, ForceMode2D.Force);
+            _rotationPower = 100;
         }
-        if (rotateCW)
+        if (_rotateCW)
         {
-            PlayerObj.rotation += RotationPower * Time.deltaTime;
+            PlayerObj.rotation += _rotationPower * Time.deltaTime;
             // Debug.Log(RotationPower);
         }
-        if (rotateCCW)
+        if (_rotateCCW)
         {
-            PlayerObj.rotation -= RotationPower * Time.deltaTime;
+            PlayerObj.rotation -= _rotationPower * Time.deltaTime;
         }
         SetDrag();
-        RotationPower = 420;
+        _rotationPower = 420;
     }
 
     void BoundaryForce()
@@ -89,21 +90,30 @@ public class PlayerMovement : MonoBehaviour
 
     Vector2 Vector2FromAngle(float a)
     {
-        a = a * Mathf.Deg2Rad;
+        a = a * Mathf.Deg2Rad +  90 * Mathf.Deg2Rad;
         return new Vector2(Mathf.Cos(a), Mathf.Sin(a));
     }
 
     void GetInput()
     {
-        rotateCCW = false;
-        rotateCW = false;
-        accelerate = false;
+        _rotateCCW = false;
+        _rotateCW = false;
+        _accelerate = false;
+        
+        Debug.Log(_accelerateTime);
 
         if (Input.GetKey(KeyCode.UpArrow))
-            accelerate = true;
+        {
+            _accelerate = true;
+            _accelerateTime += Time.deltaTime;
+        }
+        else
+        {
+            _accelerateTime = 0f;
+        }
         if (Input.GetKey(KeyCode.RightArrow))
-            rotateCW = true;
+            _rotateCW = true;
         if (Input.GetKey(KeyCode.LeftArrow))
-            rotateCCW = true;
+            _rotateCCW = true;
     }
 }
