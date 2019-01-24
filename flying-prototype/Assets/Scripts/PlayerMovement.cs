@@ -85,7 +85,6 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerObj.drag = 2f;
         }
-        // Debug.Log("Speed: " + PlayerObj.velocity.magnitude);
     }
 
     Vector2 Vector2FromAngle(float a)
@@ -99,8 +98,6 @@ public class PlayerMovement : MonoBehaviour
         _rotateCCW = false;
         _rotateCW = false;
         _accelerate = false;
-        
-        Debug.Log(_accelerateTime);
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
