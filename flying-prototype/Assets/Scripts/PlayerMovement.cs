@@ -40,12 +40,12 @@ public class PlayerMovement : MonoBehaviour
         }
         if (_rotateCW)
         {
-            PlayerObj.rotation += _rotationPower * Time.deltaTime;
+            PlayerObj.rotation -= _rotationPower * Time.deltaTime;
             // Debug.Log(RotationPower);
         }
         if (_rotateCCW)
         {
-            PlayerObj.rotation -= _rotationPower * Time.deltaTime;
+            PlayerObj.rotation += _rotationPower * Time.deltaTime;
         }
         SetDrag();
         _rotationPower = 420;
