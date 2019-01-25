@@ -41,7 +41,6 @@ public class PlayerMovement : MonoBehaviour
         if (_rotateCW)
         {
             PlayerObj.rotation -= _rotationPower * Time.deltaTime;
-            // Debug.Log(RotationPower);
         }
         if (_rotateCCW)
         {
