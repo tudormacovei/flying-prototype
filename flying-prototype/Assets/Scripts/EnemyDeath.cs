@@ -20,9 +20,12 @@ public class EnemyDeath : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collison detected");
-        EnemyAnimator.SetBool("isDestroyed", true);
-        Invoke("DestroyEnemy", 0.2f);
+        if (collision.gameObject.name == "BulletSmall(Clone)")
+        {
+            Debug.Log("Collison detected");
+            EnemyAnimator.SetBool("isDestroyed", true);
+            Invoke("DestroyEnemy", 0.2f);
+        }
     }
 
     void DestroyEnemy()
