@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     // Used for physics operations
     void FixedUpdate()
     {
-        Vector2 forwardVector = Vector2FromAngle(PlayerObj.rotation );
+        Vector2 forwardVector = Vector2FromAngle(PlayerObj.rotation);
 
         BoundaryForce();
         if (_accelerate && _accelerateTime > 0.2f)

@@ -23,7 +23,7 @@ public class PlayerAnimation : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(this.gameObject.name + " collision trigger");
-        if (collision.gameObject.name == "EnemyBasic")
+        if (collision.gameObject.name.StartsWith("EnemyBasic"))
         {
             Animator.SetBool("Death", true);
             Invoke("DestroyPlayer", 0.7f);
