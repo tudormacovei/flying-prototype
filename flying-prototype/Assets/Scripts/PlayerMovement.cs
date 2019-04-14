@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Rigidbody2D PlayerObj;
+    public Rigidbody2D PlayerRigid;
 
-    private bool _rotateCW;
-    private bool _rotateCCW;
-    private bool _accelerate;
-    private float _accelerateTime;
-    private int _accelerationPower;
-    private int _rotationPower;
+    private bool rotateCW;
+    private bool rotateCCW;
+    private bool accelerate;
+    private float accelerateTime;
+    private int acceleratePower;
+    private int rotatePower;
 
     // Use this for initialization
     void Start ()
     {
-        _accelerationPower = 480;
-        _accelerateTime = 0;
-        _rotationPower = 420;
+        acceleratePower = 480;
+        accelerateTime = 0;
+        rotatePower = 420;
 	}
 	
 	// Update is called once per frame
@@ -30,59 +30,59 @@ public class PlayerMovement : MonoBehaviour
     // Used for physics operations
     void FixedUpdate()
     {
-        Vector2 forwardVector = Vector2FromAngle(PlayerObj.rotation);
+        Vector2 forwardVector = Vector2FromAngle(PlayerRigid.rotation);
 
         BoundaryForce();
-        if (_accelerate && _accelerateTime > 0.2f)
+        if (accelerate && accelerateTime > 0.2f)
         {
-            PlayerObj.AddForce(forwardVector * _accelerationPower * Time.deltaTime, ForceMode2D.Force);
-            _rotationPower = 100;
+            PlayerRigid.AddForce(forwardVector * acceleratePower * Time.deltaTime, ForceMode2D.Force);
+            rotatePower = 100;
         }
-        if (_rotateCW)
+        if (rotateCW)
         {
-            PlayerObj.rotation -= _rotationPower * Time.deltaTime;
+            PlayerRigid.rotation -= rotatePower * Time.deltaTime;
         }
-        if (_rotateCCW)
+        if (rotateCCW)
         {
-            PlayerObj.rotation += _rotationPower * Time.deltaTime;
+            PlayerRigid.rotation += rotatePower * Time.deltaTime;
         }
         SetDrag();
-        _rotationPower = 420;
+        rotatePower = 420;
     }
 
     void BoundaryForce()
     {
-        Vector2 boundaryVector = PlayerObj.transform.position * 0.8f;
+        Vector2 boundaryVector = PlayerRigid.transform.position * 0.8f;
 
         boundaryVector.x *= -1;
         boundaryVector.y *= -1;
-        if (PlayerObj.transform.position.x > -4f && PlayerObj.transform.position.x < 4f)
+        if (PlayerRigid.transform.position.x > -4f && PlayerRigid.transform.position.x < 4f)
         {
             boundaryVector.x = 0;
         }
-        if (PlayerObj.transform.position.y > -4f && PlayerObj.transform.position.y < 4f)
+        if (PlayerRigid.transform.position.y > -4f && PlayerRigid.transform.position.y < 4f)
         {
             boundaryVector.y = 0;
         }
-        if (PlayerObj.transform.position.x < -4.5f || PlayerObj.transform.position.x > 4.5f ||
-            PlayerObj.transform.position.y < -4.5f || PlayerObj.transform.position.y > 4.5f)
+        if (PlayerRigid.transform.position.x < -4.5f || PlayerRigid.transform.position.x > 4.5f ||
+            PlayerRigid.transform.position.y < -4.5f || PlayerRigid.transform.position.y > 4.5f)
         {
-            PlayerObj.drag = 6f;
+            PlayerRigid.drag = 6f;
             boundaryVector *= 4;
         }
-        PlayerObj.AddForce(boundaryVector);
+        PlayerRigid.AddForce(boundaryVector);
     }
 
     void SetDrag()
     {
-        PlayerObj.drag = 0.5f;
-        if (PlayerObj.velocity.magnitude > 1f)
+        PlayerRigid.drag = 0.5f;
+        if (PlayerRigid.velocity.magnitude > 1f)
         {
-            PlayerObj.drag = 0.7f;
+            PlayerRigid.drag = 0.7f;
         }
-        if (PlayerObj.velocity.magnitude > 5f)
+        if (PlayerRigid.velocity.magnitude > 5f)
         {
-            PlayerObj.drag = 2f;
+            PlayerRigid.drag = 2f;
         }
     }
 
@@ -94,22 +94,22 @@ public class PlayerMovement : MonoBehaviour
 
     void GetInput()
     {
-        _rotateCCW = false;
-        _rotateCW = false;
-        _accelerate = false;
+        rotateCCW = false;
+        rotateCW = false;
+        accelerate = false;
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            _accelerate = true;
-            _accelerateTime += Time.deltaTime;
+            accelerate = true;
+            accelerateTime += Time.deltaTime;
         }
         else
         {
-            _accelerateTime = 0f;
+            accelerateTime = 0f;
         }
         if (Input.GetKey(KeyCode.RightArrow))
-            _rotateCW = true;
+            rotateCW = true;
         if (Input.GetKey(KeyCode.LeftArrow))
-            _rotateCCW = true;
+            rotateCCW = true;
     }
 }

@@ -8,33 +8,34 @@ public class EnemyMovement : MonoBehaviour
     public Rigidbody2D Target;
 
     private System.Random rand;
-    private Vector2 forwardVector;
-    private int randValue;
-    private float rotationSpeed;
-    private float _accelerationPower;
+    private Vector2 accelerateVector;
+    private int randInt;
+    private float rotateSpeed;
+    private float acceleratePower;
 
     // Use this for initialization
     void Start ()
     {
-        // Randomize the speed of enemies spawned at different times
+        // Randomize the acceleration of enemies spawned at different times
         rand = new System.Random();
-        randValue = rand.Next(1, 10);
-        Speed += randValue * 0.1f;
-        rotationSpeed = 5;
-        // Randomize this, speed is unused
-        _accelerationPower = 20;
-	}
+        randInt = rand.Next(1, 10);
+        acceleratePower = 15 + randInt;
+        rotateSpeed = 5;
+    }
 	
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
     {
-        Vector3 vectorToTarget = Target.transform.position - transform.position;
-        float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
-        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpeed);
-        // transform.position = Vector2.MoveTowards(transform.position, Target.position, Speed * Time.deltaTime);
-        forwardVector = Vector2FromAngle(angle);
-        gameObject.GetComponent<Rigidbody2D>().AddForce(forwardVector * _accelerationPower * Time.deltaTime, ForceMode2D.Force);
+        Vector3 vectorToTarget;
+        float angle;
+        Quaternion q;
+
+        vectorToTarget = Target.transform.position - transform.position;
+        angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
+        q = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotateSpeed);
+        accelerateVector = Vector2FromAngle(angle);
+        gameObject.GetComponent<Rigidbody2D>().AddForce(accelerateVector * acceleratePower * Time.deltaTime, ForceMode2D.Force);
     }
 
     Vector2 Vector2FromAngle(float a)

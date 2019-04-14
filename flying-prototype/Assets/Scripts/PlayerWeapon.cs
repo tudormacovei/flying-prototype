@@ -7,32 +7,32 @@ public class PlayerWeapon : MonoBehaviour
     public Rigidbody2D PlayerRigid;
     public GameObject BulletPrefab;
 
-    GameObject _clone;
-    int _bulletSpeed;
-    float _deltaTime;
+    GameObject clone;
+    int bulletSpeed;
+    float deltaTime;
 
     // Use this for initialization
     void Start ()
     {
-        _bulletSpeed = 35;
-        _deltaTime = 0;
+        bulletSpeed = 35;
+        deltaTime = 0;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        Rigidbody2D _cloneRigid;
-        Vector3 _clonePosition;
+        Rigidbody2D cloneRigid;
+        Vector3 clonePosition;
         Vector2 forwardVector = Vector2FromAngle(PlayerRigid.rotation);
 
-        _deltaTime -= Time.deltaTime;
-        _clonePosition = PlayerRigid.transform.position;
-        if (Input.GetKey(KeyCode.Space) && _deltaTime < 0)
+        deltaTime -= Time.deltaTime;
+        clonePosition = PlayerRigid.transform.position;
+        if (Input.GetKey(KeyCode.Space) && deltaTime < 0)
         {
-            _clone = Instantiate(BulletPrefab, PlayerRigid.transform);
-            _cloneRigid = _clone.GetComponent<Rigidbody2D>();
-            _cloneRigid.AddForce(forwardVector * _bulletSpeed);
-            _deltaTime = 0.2f;
+            clone = Instantiate(BulletPrefab, PlayerRigid.transform);
+            cloneRigid = clone.GetComponent<Rigidbody2D>();
+            cloneRigid.AddForce(forwardVector * bulletSpeed);
+            deltaTime = 0.2f;
         }
 	}
 

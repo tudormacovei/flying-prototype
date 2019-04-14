@@ -3,7 +3,6 @@ A score attack shoot 'em up made in Unity.
 
 # TODO
 1. Enemies
- - movement
  - spawning
 2. Animations / Graphics
  - force field (boundary)

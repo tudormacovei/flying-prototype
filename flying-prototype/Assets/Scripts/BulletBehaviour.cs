@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class BulletBehaviour : MonoBehaviour
 {
-    float _deathTimer;
-    bool _blink;
+    float deathTimer;
+    bool blink;
 
 	// Use this for initialization
 	void Start ()
     {
-        _deathTimer = 1f;
-        _blink = false;
+        deathTimer = 1f;
+        blink = false;
         StartCoroutine(Blink(2, 0.25f, 0.05f));
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        _deathTimer -= Time.deltaTime;
-        if (_deathTimer < 0.2f && !_blink)
+        deathTimer -= Time.deltaTime;
+        if (deathTimer < 0.2f && !blink)
         {
-            _blink = true;
+            blink = true;
             // this.gameObject.GetComponent<Renderer>().material.color.a = 0.5f;
             StartCoroutine(Blink(3, 0.05f, 0.08f));
         }
-        if (_deathTimer < 0)
+        if (deathTimer < 0)
         {   
             Destroy(this.gameObject);
         }
