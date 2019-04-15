@@ -5,8 +5,8 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     public float Speed;
-    public Rigidbody2D Target;
 
+    private Rigidbody2D target;
     private System.Random rand;
     private Vector2 accelerateVector;
     private int randInt;
@@ -16,11 +16,12 @@ public class EnemyMovement : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        // Randomize the acceleration of enemies spawned at different times
+        // Randomize the acceleration and rotation of enemies spawned at different times
         rand = new System.Random();
-        randInt = rand.Next(1, 10);
-        acceleratePower = 15 + randInt;
-        rotateSpeed = 5;
+        randInt = rand.Next(1, 100);
+        acceleratePower = 15 + randInt * 0.1f;
+        rotateSpeed = 5 + randInt * 0.01f;
+        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
     }
 	
 	// Update is called once per frame
@@ -30,7 +31,7 @@ public class EnemyMovement : MonoBehaviour
         float angle;
         Quaternion q;
 
-        vectorToTarget = Target.transform.position - transform.position;
+        vectorToTarget = target.transform.position - transform.position;
         angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
         q = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotateSpeed);
