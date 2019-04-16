@@ -24,6 +24,7 @@ public class EnemyDeath : MonoBehaviour
         {
             Debug.Log("Collison detected");
             EnemyAnimator.SetBool("isDestroyed", true);
+            GetComponent<Collider2D>().enabled = false;
             Invoke("DestroyEnemy", 0.2f);
         }
     }

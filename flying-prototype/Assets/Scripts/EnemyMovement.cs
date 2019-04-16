@@ -30,7 +30,7 @@ public class EnemyMovement : MonoBehaviour
         Vector3 vectorToTarget;
         float angle;
         Quaternion q;
-
+        
         vectorToTarget = target.transform.position - transform.position;
         angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
         q = Quaternion.AngleAxis(angle, Vector3.forward);

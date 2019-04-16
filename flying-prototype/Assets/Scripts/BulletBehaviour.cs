@@ -12,7 +12,7 @@ public class BulletBehaviour : MonoBehaviour
     {
         deathTimer = 1f;
         blink = false;
-        StartCoroutine(Blink(2, 0.25f, 0.05f));
+        StartCoroutine(Blink(2, 0.4f, 0.05f));
     }
 	
 	// Update is called once per frame

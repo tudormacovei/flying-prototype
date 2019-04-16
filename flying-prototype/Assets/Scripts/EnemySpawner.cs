@@ -6,14 +6,15 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject EnemyBasic;
 
-    private IEnumerator wave;
+    private IEnumerator waveStart;
+    private enum WavePosition {north = 0, south, east, west};
 
     // Use this for initialization
     void Start ()
     {
         // test phase
-        wave = WaveBasic(50, 0);
-        StartCoroutine(wave);
+        waveStart = Wave(20, (int)WavePosition.south, 1f);
+        StartCoroutine(waveStart);
 	}
 	
 	// Update is called once per frame
@@ -22,15 +23,36 @@ public class EnemySpawner : MonoBehaviour
         
     }
 
-    private IEnumerator WaveBasic(int waveSize, int position)
+    private IEnumerator Wave(int waveSize, int position, float timeFreq)
     {
         // TODO: Position argument
         //       Spawn from entire side of play area
         int i = 0;
+        int randOffset;
+        System.Random rand = new System.Random();
+
         while (i < waveSize)
         {
-            yield return new WaitForSeconds(0.5f);
-            Instantiate(EnemyBasic, new Vector3(6, 0, 0), Quaternion.identity);
+            randOffset = rand.Next(-5, 5);
+            yield return new WaitForSeconds(timeFreq);
+            switch (position)
+            {
+                case 0:
+                    Instantiate(EnemyBasic, new Vector3(randOffset, 6, 0), Quaternion.identity);
+                    break;
+
+                case 1:
+                    Instantiate(EnemyBasic, new Vector3(randOffset, -6, 0), Quaternion.identity);
+                    break;
+
+                case 2:
+                    Instantiate(EnemyBasic, new Vector3(6, randOffset, 0), Quaternion.identity);
+                    break;
+
+                case 3:
+                    Instantiate(EnemyBasic, new Vector3(-6, randOffset, 0), Quaternion.identity);
+                    break;
+            }
             i++;
         }
     }
