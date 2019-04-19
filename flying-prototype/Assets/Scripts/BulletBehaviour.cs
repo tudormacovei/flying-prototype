@@ -22,7 +22,6 @@ public class BulletBehaviour : MonoBehaviour
         if (deathTimer < 0.2f && !blink)
         {
             blink = true;
-            // this.gameObject.GetComponent<Renderer>().material.color.a = 0.5f;
             StartCoroutine(Blink(3, 0.05f, 0.08f));
         }
         if (deathTimer < 0)

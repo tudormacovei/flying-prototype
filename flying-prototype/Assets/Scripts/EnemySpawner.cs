@@ -13,8 +13,7 @@ public class EnemySpawner : MonoBehaviour
     void Start ()
     {
         // test phase
-        waveStart = Wave(20, (int)WavePosition.south, 1f);
-        StartCoroutine(waveStart);
+        SpawnWave_1();
 	}
 	
 	// Update is called once per frame
@@ -23,10 +22,14 @@ public class EnemySpawner : MonoBehaviour
         
     }
 
-    private IEnumerator Wave(int waveSize, int position, float timeFreq)
+    private void SpawnWave_1()
     {
-        // TODO: Position argument
-        //       Spawn from entire side of play area
+        waveStart = SpawnWave(20, (int)WavePosition.east, 1f);
+        StartCoroutine(waveStart);
+    }
+
+    private IEnumerator SpawnWave(int waveSize, int position, float timeFreq)
+    {
         int i = 0;
         int randOffset;
         System.Random rand = new System.Random();

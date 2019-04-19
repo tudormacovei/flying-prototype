@@ -22,7 +22,7 @@ public class EnemyDeath : MonoBehaviour
     {
         if (collision.gameObject.name == "BulletSmall(Clone)")
         {
-            Debug.Log("Collison detected");
+            Debug.Log("Enemy Hit");
             EnemyAnimator.SetBool("isDestroyed", true);
             GetComponent<Collider2D>().enabled = false;
             Invoke("DestroyEnemy", 0.2f);

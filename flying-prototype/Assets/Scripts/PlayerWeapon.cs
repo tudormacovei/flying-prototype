@@ -24,6 +24,8 @@ public class PlayerWeapon : MonoBehaviour
         Rigidbody2D cloneRigid;
         Vector3 clonePosition;
         Vector2 forwardVector = Vector2FromAngle(PlayerRigid.rotation);
+        int randOffset;
+        System.Random rand = new System.Random();
 
         deltaTime -= Time.deltaTime;
         clonePosition = PlayerRigid.transform.position;
@@ -31,7 +33,8 @@ public class PlayerWeapon : MonoBehaviour
         {
             clone = Instantiate(BulletPrefab, PlayerRigid.transform);
             cloneRigid = clone.GetComponent<Rigidbody2D>();
-            cloneRigid.AddForce(forwardVector * bulletSpeed);
+            randOffset = rand.Next(1, 5);
+            cloneRigid.AddForce(forwardVector * (bulletSpeed + randOffset));
             deltaTime = 0.2f;
         }
 	}

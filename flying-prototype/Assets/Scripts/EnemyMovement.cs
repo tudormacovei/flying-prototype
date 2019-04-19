@@ -24,7 +24,7 @@ public class EnemyMovement : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
     }
 	
-	// Update is called once per frame
+	// Used for physics operations
 	void FixedUpdate ()
     {
         Vector3 vectorToTarget;
