@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     {
         acceleratePower = 480;
         accelerateTime = 0;
-        rotatePower = 420;
+        rotatePower = 370;
 	}
 	
 	// Update is called once per frame

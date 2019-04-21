@@ -13,7 +13,7 @@ public class EnemySpawner : MonoBehaviour
     void Start ()
     {
         // test phase
-        SpawnWave_1();
+        // SpawnWave(1);
 	}
 	
 	// Update is called once per frame
@@ -22,13 +22,15 @@ public class EnemySpawner : MonoBehaviour
         
     }
 
-    private void SpawnWave_1()
+    // To be called from GameManager
+    public void SpawnWave(int waveNumber)
     {
-        waveStart = SpawnWave(20, (int)WavePosition.east, 1f);
+        // Randomize waves based on a randndom variabile and waveNumber
+        waveStart = SpawnBasicWave(20, (int)WavePosition.east, 1f);
         StartCoroutine(waveStart);
     }
 
-    private IEnumerator SpawnWave(int waveSize, int position, float timeFreq)
+    private IEnumerator SpawnBasicWave(int waveSize, int position, float timeFreq)
     {
         int i = 0;
         int randOffset;
