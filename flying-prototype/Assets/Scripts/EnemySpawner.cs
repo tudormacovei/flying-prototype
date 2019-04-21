@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject EnemyBasic;
 
     private IEnumerator waveStart;
-    private enum WavePosition {north = 0, south, east, west};
+    private enum WavePosition {North = 0, South, East, West};
 
     // Use this for initialization
     void Start ()
@@ -22,15 +22,20 @@ public class EnemySpawner : MonoBehaviour
         
     }
 
+    public void StartWaves()
+    {
+        // SpawnWave, wait for all enemies to die, spawn next wave until 5th wave is reached
+    }
+
     // To be called from GameManager
-    public void SpawnWave(int waveNumber)
+    void SpawnWave(int waveNumber)
     {
         // Randomize waves based on a randndom variabile and waveNumber
-        waveStart = SpawnBasicWave(20, (int)WavePosition.east, 1f);
+        waveStart = SpawnBasicWave(20, (int)WavePosition.East, 1f);
         StartCoroutine(waveStart);
     }
 
-    private IEnumerator SpawnBasicWave(int waveSize, int position, float timeFreq)
+    IEnumerator SpawnBasicWave(int waveSize, int position, float timeFreq)
     {
         int i = 0;
         int randOffset;
