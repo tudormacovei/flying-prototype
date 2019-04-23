@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     // Handle Changes in GameState, losing and winning
     private void Start()
     {
+        enemySpawner = GetComponent<EnemySpawner>();
         SceneManager.LoadScene((int)SceneIndex.GameLevel);
         State = GameState.StartMenu;
     }
