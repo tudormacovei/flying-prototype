@@ -12,22 +12,15 @@ public class EnemySpawner : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        // test phase
-        // SpawnWave(1);
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
         
-    }
+	}
 
+    // Called from GameManager
     public void StartWaves()
     {
         // SpawnWave, wait for all enemies to die, spawn next wave until 5th wave is reached
     }
 
-    // To be called from GameManager
     void SpawnWave(int waveNumber)
     {
         // Randomize waves based on a randndom variabile and waveNumber
