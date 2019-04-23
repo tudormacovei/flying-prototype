@@ -10,13 +10,6 @@ public class GameStart : MonoBehaviour
     void Start ()
     {
         gameManager = FindObjectOfType<GameManager>();
-        gameManager.OnStateChange += DeloadMainMenu;
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -25,11 +18,7 @@ public class GameStart : MonoBehaviour
         {
             gameManager.OnStateChange += gameManager.StartSpawner;
             gameManager.SetGameState(GameState.InGame);
+            gameManager.OnStateChange -= gameManager.StartSpawner;
         }
-    }
-
-    void DeloadMainMenu()
-    {
-        Debug.Log("Deloading main menu");
     }
 }

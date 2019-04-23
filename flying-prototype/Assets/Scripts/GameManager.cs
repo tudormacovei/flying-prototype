@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
-public enum GameState { StartMenu, InGame, Win, Loss };
+public enum GameState { StartMenu, Options, Credits, InGame, Win, Loss };
 
 public delegate void OnStateChangeHandler();
 
@@ -18,21 +18,23 @@ public class GameManager : MonoBehaviour
     // Init GameState to 'StartMenu'
     // We only have one scene, the player is spawned from the start
     // Handle Changes in GameState, losing and winning
-    private void Start()
+    private void Awake()
     {
         enemySpawner = GetComponent<EnemySpawner>();
-        SceneManager.LoadScene((int)SceneIndex.GameLevel);
         State = GameState.StartMenu;
+        // SceneManager.LoadScene((int)SceneIndex.GameLevel);
     }
     
     public void SetGameState(GameState state)
     {
+        Debug.Log("GameState changing to: " + state);
         this.State = state;
         OnStateChange();
     }
 
     public void StartSpawner()
     {
+        Debug.Log("Spawner starting");
         enemySpawner.StartWaves();
     }
 
