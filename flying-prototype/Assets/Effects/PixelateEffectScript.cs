@@ -5,7 +5,6 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class PixelateEffectScript : MonoBehaviour
 {
-
     public Material EffectMaterial; 
 
 	// Use this for initialization

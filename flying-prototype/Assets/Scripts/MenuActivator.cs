@@ -23,7 +23,7 @@ public class MenuActivator : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player")
+        if (collision.gameObject.name.StartsWith("Player"))
         {
             gameManager.OnStateChange += LoadObject;
             gameManager.SetGameState(ToGameState);

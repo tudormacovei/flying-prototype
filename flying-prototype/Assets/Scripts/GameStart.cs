@@ -14,7 +14,7 @@ public class GameStart : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "BulletSmall(Clone)")
+        if (collision.gameObject.name.StartsWith("BulletSmall"))
         {
             gameManager.OnStateChange += gameManager.StartSpawner;
             gameManager.SetGameState(GameState.InGame);

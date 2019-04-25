@@ -6,22 +6,32 @@ public class EnemyMovement : MonoBehaviour
 {
     public float Speed;
 
-    private Rigidbody2D target;
+    private Transform target;
     private System.Random rand;
     private Vector2 accelerateVector;
     private int randInt;
     private float rotateSpeed;
     private float acceleratePower;
+    private GameManager gameManager;
 
     // Use this for initialization
     void Start ()
     {
         // Randomize the acceleration and rotation of enemies spawned at different times
         rand = new System.Random();
-        randInt = rand.Next(1, 100);
-        acceleratePower = 15 + randInt * 0.1f;
+        randInt = rand.Next(1, 150);
+        acceleratePower = 10 + randInt * 0.1f;
         rotateSpeed = 5 + randInt * 0.01f;
-        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
+        gameManager = FindObjectOfType<GameManager>();
+        if (gameManager.State != GameState.InGame)
+        {
+            target = transform;
+            acceleratePower = 0;
+        }
+        else
+        {
+            target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        }
     }
 	
 	// Used for physics operations
@@ -30,8 +40,13 @@ public class EnemyMovement : MonoBehaviour
         Vector3 vectorToTarget;
         float angle;
         Quaternion q;
-        
-        vectorToTarget = target.transform.position - transform.position;
+
+        if (gameManager.State != GameState.InGame)
+        {
+            target = transform;
+            acceleratePower = 0;
+        }
+        vectorToTarget = target.position - transform.position;
         angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
         q = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotateSpeed);

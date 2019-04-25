@@ -6,10 +6,13 @@ public class PlayerAnimation : MonoBehaviour
 {
     public Animator Animator;
 
+    private GameManager gameManager;
+
 	// Use this for initialization
 	void Start ()
     {
         Animator.SetBool("Thrust", false);
+        gameManager = FindObjectOfType<GameManager>();
 	}
 	
 	// Update is called once per frame
@@ -31,6 +34,14 @@ public class PlayerAnimation : MonoBehaviour
     
     private void DestroyPlayer()
     {
+        gameManager.OnStateChange += OnPlayerDestroy;
+        gameManager.OnStateChange += gameManager.OnLoss;
+        gameManager.SetGameState(GameState.Loss);
+    }
+
+    private void OnPlayerDestroy()
+    {
         Destroy(this.gameObject);
+        gameManager.OnStateChange -= OnPlayerDestroy;
     }
 }

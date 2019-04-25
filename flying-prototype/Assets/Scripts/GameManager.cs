@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
 {
     public event OnStateChangeHandler OnStateChange;
     public GameState State { get; private set; }
+    public List<GameObject> LossTitle;
+    public GameObject LossMenu;
+    public GameObject WinMenu;
+    public GameObject Player;
 
     private EnemySpawner enemySpawner;
     private enum SceneIndex { Preload = 0, GameLevel };
@@ -38,4 +42,30 @@ public class GameManager : MonoBehaviour
         StartCoroutine(enemySpawner.StartWave(1));
     }
 
+    public void OnLoss()
+    {
+        System.Random rand = new System.Random();
+        int titleIndex;
+
+        StartCoroutine(PlayerSpawnDelay());
+        LossMenu.SetActive(true);
+        titleIndex = rand.Next(1, 4);
+        LossTitle[titleIndex].SetActive(true);
+        OnStateChange -= OnLoss;
+    }
+    
+    // Add inverse player death animation for spawning
+    private IEnumerator PlayerSpawnDelay()
+    {
+        Debug.Log("Player Spawned");
+        yield return new WaitForSeconds(1f);
+        Instantiate(Player);
+        
+    }
+
+    public void OnWin()
+    {
+        WinMenu.SetActive(true);
+        OnStateChange -= OnWin;
+    }
 }
