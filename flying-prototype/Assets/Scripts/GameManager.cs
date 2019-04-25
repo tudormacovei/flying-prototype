@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     {
         enemySpawner = GetComponent<EnemySpawner>();
         State = GameState.StartMenu;
-        // SceneManager.LoadScene((int)SceneIndex.GameLevel);
+        SceneManager.LoadScene((int)SceneIndex.GameLevel);
     }
     
     public void SetGameState(GameState state)
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     public void StartSpawner()
     {
         Debug.Log("Spawner starting");
-        enemySpawner.StartWaves();
+        StartCoroutine(enemySpawner.StartWave(1));
     }
 
 }
