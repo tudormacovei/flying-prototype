@@ -13,14 +13,21 @@ public class PlayerMovement : MonoBehaviour
     private int acceleratePower;
     private int rotatePower;
 
+    public void KillMovement()
+    {
+        Debug.Log("Kill player movement");
+        PlayerRigid.angularDrag = 10000;
+        PlayerRigid.mass = 10000;
+    }
+    
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         acceleratePower = 480;
         accelerateTime = 0;
         rotatePower = 370;
-	}
-	
+    }
+
 	// Update is called once per frame
 	void Update ()
     {

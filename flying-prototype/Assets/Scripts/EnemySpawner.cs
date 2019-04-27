@@ -38,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(2f);
             StartCoroutine(StartWave(waveNumber + 1));
         }
-        else
+        else if (gameManager.State == GameState.InGame)
         {
             gameManager.OnStateChange += gameManager.OnWin;
             gameManager.SetGameState(GameState.Win);
@@ -52,9 +52,10 @@ public class EnemySpawner : MonoBehaviour
         float enemyFrequency;
 
         // Randomize waves based on a random variabile and waveNumber
-        randOffset = rand.Next(0, 3);
-        enemyCount = (1 + randOffset * 3) * waveNumber;
-        enemyFrequency = 1f / waveNumber;
+        randOffset = rand.Next(1, 5);
+        // Increase dificulty using this variable
+        enemyCount = randOffset * waveNumber;
+        enemyFrequency = waveNumber / 4f;
         waveStart = SpawnBasicWave(enemyCount, randOffset, enemyFrequency);
         StartCoroutine(waveStart);
         Debug.Log("Wave " + waveNumber + " Spawning");
@@ -75,19 +76,19 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(timeFreq);
             switch (position)
             {
-                case 0:
+                case 1:
                     Instantiate(EnemyBasic, new Vector3(randOffset, 6, 0), Quaternion.identity);
                     break;
 
-                case 1:
+                case 2:
                     Instantiate(EnemyBasic, new Vector3(randOffset, -6, 0), Quaternion.identity);
                     break;
 
-                case 2:
+                case 3:
                     Instantiate(EnemyBasic, new Vector3(6, randOffset, 0), Quaternion.identity);
                     break;
 
-                case 3:
+                case 4:
                     Instantiate(EnemyBasic, new Vector3(-6, randOffset, 0), Quaternion.identity);
                     break;
             }
