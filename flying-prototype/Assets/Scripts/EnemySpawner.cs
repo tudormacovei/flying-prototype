@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject EnemyBasic;
+    public List<GameObject> WaveTitle;
 
     private GameManager gameManager;
     private IEnumerator waveStart;
@@ -29,13 +30,15 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
         yield return new WaitForSeconds(0.5f);
-        if (waveNumber <= 4)
+        if (waveNumber <= 4 && gameManager.State == GameState.InGame)
         {
             for (int i = 0; i < waveNumber; i++)
             {
                 SpawnWave(waveNumber);
             }
+            WaveTitle[waveNumber - 1].SetActive(true);
             yield return new WaitForSeconds(2f);
+            WaveTitle[waveNumber - 1].SetActive(false);
             StartCoroutine(StartWave(waveNumber + 1));
         }
         else if (gameManager.State == GameState.InGame)
@@ -54,7 +57,7 @@ public class EnemySpawner : MonoBehaviour
         // Randomize waves based on a random variabile and waveNumber
         randOffset = rand.Next(1, 5);
         // Increase dificulty using this variable
-        enemyCount = randOffset * waveNumber;
+        enemyCount = (randOffset / 2 + 5) * waveNumber;
         enemyFrequency = waveNumber / 4f;
         waveStart = SpawnBasicWave(enemyCount, randOffset, enemyFrequency);
         StartCoroutine(waveStart);

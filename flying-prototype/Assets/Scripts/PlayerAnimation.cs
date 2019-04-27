@@ -30,20 +30,21 @@ public class PlayerAnimation : MonoBehaviour
             PlayerMovement playerMovement = GetComponent<PlayerMovement>();
             playerMovement.KillMovement();
             Animator.SetBool("Death", true);
-            Invoke("DestroyPlayer", 0.4f);
+            Invoke("OnPlayerDestroyDelayed", 0.5f);
+            Invoke ("DestroyPlayer", 2f);
         }
     }
-    
+
     private void DestroyPlayer()
     {
-        gameManager.OnStateChange += OnPlayerDestroy;
+        Destroy(this.gameObject);
         gameManager.OnStateChange += gameManager.OnLoss;
         gameManager.SetGameState(GameState.Loss);
     }
 
-    private void OnPlayerDestroy()
+    private void OnPlayerDestroyDelayed()
     {
-        Destroy(this.gameObject);
-        gameManager.OnStateChange -= OnPlayerDestroy;
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.enabled = false;
     }
 }

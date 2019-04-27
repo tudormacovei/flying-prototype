@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private bool rotateCW;
     private bool rotateCCW;
     private bool accelerate;
+    private bool playerShooting;
     private float accelerateTime;
     private int acceleratePower;
     private int rotatePower;
@@ -40,6 +41,10 @@ public class PlayerMovement : MonoBehaviour
         Vector2 forwardVector = Vector2FromAngle(PlayerRigid.rotation);
 
         BoundaryForce();
+        if (playerShooting)
+        {
+            rotatePower = 250;
+        }
         if (accelerate && accelerateTime > 0.2f)
         {
             PlayerRigid.AddForce(forwardVector * acceleratePower * Time.deltaTime, ForceMode2D.Force);
@@ -104,7 +109,12 @@ public class PlayerMovement : MonoBehaviour
         rotateCCW = false;
         rotateCW = false;
         accelerate = false;
+        playerShooting = false;
 
+        if (Input.GetKey(KeyCode.Space))
+        {
+            playerShooting = true;
+        }
         if (Input.GetKey(KeyCode.UpArrow))
         {
             accelerate = true;

@@ -6,6 +6,7 @@ public class PlayerWeapon : MonoBehaviour
 {
     public Rigidbody2D PlayerRigid;
     public GameObject BulletPrefab;
+    public Animator Animator;
 
     GameObject clone;
     int bulletSpeed;
@@ -29,7 +30,7 @@ public class PlayerWeapon : MonoBehaviour
 
         deltaTime -= Time.deltaTime;
         clonePosition = PlayerRigid.transform.position;
-        if (Input.GetKey(KeyCode.Space) && deltaTime < 0)
+        if (Input.GetKey(KeyCode.Space) && deltaTime < 0 && !Animator.GetBool("Death"))
         {
             clone = Instantiate(BulletPrefab, PlayerRigid.transform);
             cloneRigid = clone.GetComponent<Rigidbody2D>();

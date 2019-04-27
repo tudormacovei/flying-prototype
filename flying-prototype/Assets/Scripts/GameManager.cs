@@ -54,13 +54,11 @@ public class GameManager : MonoBehaviour
         OnStateChange -= OnLoss;
     }
     
-    // Add inverse player death animation for spawning
     private IEnumerator PlayerSpawnDelay()
     {
         yield return new WaitForSeconds(2f);
         Debug.Log("Player Spawned");
         Instantiate(Player, new Vector3(0, 5.2f), Quaternion.identity);
-        
     }
 
     public void OnWin()

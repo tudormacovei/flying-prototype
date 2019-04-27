@@ -135,6 +135,7 @@ MonoBehaviour:
   PlayerRigid: {fileID: 50773589740112260}
   BulletPrefab: {fileID: 1648754580111982, guid: 243ac773cf3db304b93dc4a9ca3b1783,
     type: 2}
+  Animator: {fileID: 95872938645080042}
 --- !u!114 &114507814384973630
 MonoBehaviour:
   m_ObjectHideFlags: 1
