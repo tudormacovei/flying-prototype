@@ -68,7 +68,7 @@ public class EnemySpawner : MonoBehaviour
 
         while (i < waveSize)
         {
-            randOffset = rand.Next(-5, 5);
+            randOffset = rand.Next(-5, 6);
             if (gameManager.State != GameState.InGame)
             {
                 yield break;

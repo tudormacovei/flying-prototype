@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(PlayerSpawnDelay());
         LossMenu.SetActive(true);
-        titleIndex = rand.Next(1, 4);
+        titleIndex = rand.Next(0, 4);
         LossTitle[titleIndex].SetActive(true);
         OnStateChange -= OnLoss;
     }
@@ -57,9 +57,9 @@ public class GameManager : MonoBehaviour
     // Add inverse player death animation for spawning
     private IEnumerator PlayerSpawnDelay()
     {
+        yield return new WaitForSeconds(2f);
         Debug.Log("Player Spawned");
-        yield return new WaitForSeconds(1f);
-        Instantiate(Player);
+        Instantiate(Player, new Vector3(0, 5.2f), Quaternion.identity);
         
     }
 

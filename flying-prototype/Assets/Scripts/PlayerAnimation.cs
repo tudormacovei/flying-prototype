@@ -30,7 +30,7 @@ public class PlayerAnimation : MonoBehaviour
             PlayerMovement playerMovement = GetComponent<PlayerMovement>();
             playerMovement.KillMovement();
             Animator.SetBool("Death", true);
-            Invoke("DestroyPlayer", 0.7f);
+            Invoke("DestroyPlayer", 0.4f);
         }
     }
     
