@@ -59,7 +59,7 @@ public class EnemySpawner : MonoBehaviour
         // Randomize waves based on a random variabile and waveNumber
         randOffset = rand.Next(1, 5);
         // Increase dificulty using this variable
-        enemyCount = (randOffset / 2 + 5) * waveNumber;
+        enemyCount = (randOffset / 2 + 1) * waveNumber + 2;
         enemyFrequency = waveNumber / 4f;
         waveStart = SpawnBasicWave(enemyCount, randOffset, enemyFrequency);
         StartCoroutine(waveStart);
