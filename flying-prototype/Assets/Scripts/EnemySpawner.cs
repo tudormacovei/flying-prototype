@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject EnemyBasic;
     public List<GameObject> WaveTitle;
+    public int WaveNumber;
 
     private GameManager gameManager;
     private IEnumerator waveStart;
@@ -20,6 +21,7 @@ public class EnemySpawner : MonoBehaviour
     // Called from GameManager
     public IEnumerator StartWave(int waveNumber)
     {
+        WaveNumber = waveNumber;
         Debug.Log("Waiting for wave: " + waveNumber);
         if (gameManager.State != GameState.InGame)
         {

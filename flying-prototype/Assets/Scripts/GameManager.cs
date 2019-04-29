@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public GameObject WinMenu;
     public GameObject Player;
 
+    private ScoreManager scoreManager;
     private EnemySpawner enemySpawner;
     private enum SceneIndex { Preload = 0, GameLevel };
     
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
         enemySpawner = GetComponent<EnemySpawner>();
         State = GameState.StartMenu;
         SceneManager.LoadScene((int)SceneIndex.GameLevel);
+        scoreManager = FindObjectOfType<ScoreManager>();
     }
     
     public void SetGameState(GameState state)
@@ -48,15 +50,17 @@ public class GameManager : MonoBehaviour
         int titleIndex;
 
         StartCoroutine(PlayerSpawnDelay());
-        LossMenu.SetActive(true);
         titleIndex = rand.Next(0, 4);
         LossTitle[titleIndex].SetActive(true);
+        scoreManager.OnLoss();
         OnStateChange -= OnLoss;
     }
     
     private IEnumerator PlayerSpawnDelay()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
+        LossMenu.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
         Debug.Log("Player Spawned");
         Instantiate(Player, new Vector3(0, 5.2f), Quaternion.identity);
     }
@@ -64,6 +68,7 @@ public class GameManager : MonoBehaviour
     public void OnWin()
     {
         WinMenu.SetActive(true);
+        scoreManager.OnWin();
         OnStateChange -= OnWin;
     }
 }
